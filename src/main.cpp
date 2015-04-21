@@ -10,19 +10,23 @@ int main(void){
   int v4 = testGraph.addVertex(90);
 
   testGraph.addEdge(v0, v1, 100);
-  testGraph.addEdge(v1, v2, 45);
+  testGraph.addEdge(v0, v4, 120);
 
-  testGraph.addEdge(v0, v4, 175);
-  testGraph.addEdge(v4, v2, 25);
+  testGraph.addEdge(v1, v2, 100);
+  testGraph.addEdge(v1, v4, 100);
 
-  testGraph.addEdge(v2, v3, 75);
+  testGraph.addEdge(v2, v3, 100);
+
+  testGraph.addEdge(v4, v1, 100);
+  testGraph.addEdge(v4, v2, 20);
 
   testGraph.printGraph();
 
   std::vector<int> path = testGraph.findShortestPath(v0, v3);
-  for(unsigned int i = 0; i < path.size(); i++)
+  for(unsigned int i = 0; i < path.size()-1; i++)
     std::cout << path[i] << " -> ";
-  std::cout << "\n";
+
+  std::cout << path[path.size()-1] << "\n";
 
   return 0;
 }

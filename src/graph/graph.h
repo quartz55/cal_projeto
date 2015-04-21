@@ -13,10 +13,11 @@ private:
   std::vector<Vertex> vertices;
 
 public:
-  int addVertex(const int garbage);
-  bool addEdge(int srcID, int destID, double distance);
+  int addVertex(const int &garbage);
+  bool addEdge(const int &srcID, const int &destID, const double &distance);
   void printGraph();
-  std::vector<int> findShortestPath(int srcID, int destID);
+  std::vector<int> findShortestPath(const int &srcID, const int &destID);
+  void resetVisited();
 };
 
 #endif
