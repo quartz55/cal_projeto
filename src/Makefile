@@ -5,13 +5,13 @@
 MY_CFLAGS =
 
 # The linker options.
-MY_LIBS   =
+MY_LIBS   = -lwsock32
 
 # The pre-processor options used by the cpp (man cpp for more).
 CPPFLAGS  = -Wall -g -O3
 
 # The options used in linking as well as in any direct use of ld.
-LDFLAGS   =
+LDFLAGS   = 
 
 # The directories in which source files reside.
 # If not specified, only the current directory will be searched.
