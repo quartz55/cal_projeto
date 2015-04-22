@@ -20,7 +20,7 @@ public:
     void printGraph();
     std::vector<int> findShortestPath(const int &srcID, const int &destID);
     std::vector<int> findLongestPath(const int &srcID, const int &destID);
-
+    std::vector<Vertex> getVertices(){return vertices;}
     Vertex &getVertex(int ID);
 };
 
