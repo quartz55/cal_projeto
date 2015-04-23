@@ -5,7 +5,7 @@
 int main(void)
 {
 	Graph testGraph;
-	Gui gui;
+	//Gui gui;
 	int v0 = testGraph.addVertex();
 	int v1 = testGraph.addVertex();
 	int v2 = testGraph.addVertex();
@@ -33,16 +33,17 @@ int main(void)
 
 	testGraph.addEdge(v5, v6, 3);
 
-	testGraph.printGraph();
+	//testGraph.printGraph();
 
+	testGraph.topologicalSort();
 	std::vector<int> path = testGraph.findShortestPath(v0, v5);
 
-	for(unsigned int i = 0; i < path.size()-1; i++)
+	/*for(unsigned int i = 0; i < path.size()-1; i++)
 		std::cout << path[i] << " -> ";
-	std::cout << path[path.size()-1] << "\n";
+	std::cout << path[path.size()-1] << "\n";*/
 
-	gui.draw(testGraph.getVertices());
-	getchar();
+	//gui.draw(testGraph.getVertices());
+	//getchar();
 
 	return 0;
 }

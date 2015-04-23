@@ -11,6 +11,7 @@ public:
     Edge(int destID, double distance):destID(destID), distance(distance){}
     int getDestID() const { return destID;}
     int getDistance() const { return distance;}
+    int setDistance(int dist) { return this->distance = dist;}
 
 };
 
