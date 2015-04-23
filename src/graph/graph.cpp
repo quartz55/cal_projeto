@@ -130,6 +130,23 @@ std::vector<int> Graph::findLongestPath(const int &srcID, const int &destID)
 
 	}
 
+	for(unsigned int i = 0; i < vertex.size();i++){
+
+		for(unsigned int k=0; k < vertex[i].getAdj().size();k++){
+
+			if(vertex[i].getAdj()[k].getDistance() != -100000){
+
+				if(vertices[i].getAdj[k].getDistance() < vertex[i].getAdj()[k].getDistance()){
+
+				}
+			}
+
+
+		}
+
+	}
+
+
 
 }
 
