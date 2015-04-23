@@ -1,5 +1,6 @@
 #include "graph.h"
 #include <limits.h>
+#include <stack>
 #include <algorithm>
 
 int Graph::addVertex()
@@ -110,4 +111,17 @@ Vertex& Graph::getVertex(int ID)
         if(ID == vertices[i].getID()) return vertices[i];
 
     return *(new Vertex(-1));
+}
+
+void Graph::topologicalSort(){
+
+	std::stack<int> Stack;
+	resetVisited();
+
+	for(unsigned int i=0; i < vertices.size();i++){
+
+			if(vertices[i].wasVisited() == false){
+
+			}
+	}
 }

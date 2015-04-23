@@ -22,6 +22,7 @@ public:
     std::vector<int> findLongestPath(const int &srcID, const int &destID);
     std::vector<Vertex> getVertices(){return vertices;}
     Vertex &getVertex(int ID);
+    void topologicalSort();
 };
 
 #endif
