@@ -16,10 +16,6 @@ bool Program::start()
     m_currentGraph.printGraph();
     m_currentGraph.printPath(m_currentGraph.findShortestPath(0, 5));
 
-
-    // Gui gui;
-    // gui.draw(testGraph.getVertices());
-    // getchar();
     return true;
 }
 
