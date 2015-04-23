@@ -1,6 +1,7 @@
 #include "graph.h"
 #include <limits.h>
 #include <algorithm>
+#include <iostream>
 
 int Graph::addVertex()
 {
@@ -29,10 +30,10 @@ int Graph::addVertex(int ID)
 
 bool Graph::addEdge(const int &srcID, const int &destID, const double &distance )
 {
-    if(vertices[srcID].hasNeighbour(destID)) return false;
-    vertices[srcID].addEdge(Edge(destID, distance));
-    vertices[destID].addEdge(Edge(srcID, distance));
-    return true;
+	if(vertices[srcID].hasNeighbour(destID)) return false;
+	vertices[srcID].addEdge(Edge(destID, distance));
+	vertices[destID].addEdge(Edge(srcID, distance));
+	return true;
 }
 
 void Graph::printGraph()
@@ -124,6 +125,14 @@ std::vector<int> Graph::findShortestPath(const int &srcID, const int &destID)
 
 std::vector<int> Graph::findLongestPath(const int &srcID, const int &destID)
 {
+    std::vector<Vertex> vertex;
+
+    for(unsigned int i=0; i < vertices.size();i++){
+        vertex.push_back(vertices[i]);
+    }
+
+    topologicalSort(vertex);
+
     return std::vector<int>();
 }
 
@@ -139,4 +148,14 @@ Vertex& Graph::getVertex(int ID)
         if(ID == vertices[i].getID()) return vertices[i];
 
     return *(new Vertex(-1));
+}
+
+bool sortByEdge(Vertex v, Vertex v1)
+{
+    return v.getAdj().size() < v1.getAdj().size();
+}
+
+void Graph::topologicalSort(std::vector<Vertex> vertex)
+{
+    sort(vertex.begin(),vertex.end(),sortByEdge);
 }

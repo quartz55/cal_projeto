@@ -10,8 +10,7 @@ class Gui{
 
 public:
 
-	//Gui();
-	//Gui(GraphViewer *gv){this->gv = gv;}
+	Gui(){this->gv=gv;}
 	void draw(const vector<Vertex> &vertices);
 
 };
