@@ -4,9 +4,27 @@
 
 int Graph::addVertex()
 {
-    int ID = vertices.size();
-    vertices.push_back(Vertex(ID));
+    int ID = 0;
+    while(addVertex(ID) == -1) ID++;
     return ID;
+}
+
+int Graph::addVertex(int ID)
+{
+    bool exists = false;
+    for(size_t i = 0; i < vertices.size(); i++)
+    {
+        if(vertices[i].getID() == ID)
+        {
+            exists = true;
+            break;
+        }
+    }
+    if(!exists){
+     vertices.push_back(Vertex(ID));
+     return ID;
+    }
+    return -1;
 }
 
 bool Graph::addEdge(const int &srcID, const int &destID, const double &distance )
@@ -19,6 +37,7 @@ bool Graph::addEdge(const int &srcID, const int &destID, const double &distance 
 
 void Graph::printGraph()
 {
+    std::cout << "+------------------------+\n";
     for(size_t i = 0; i < vertices.size(); i++)
     {
         for(size_t k = 0; k < vertices[i].getAdj().size(); k++)
@@ -28,6 +47,16 @@ void Graph::printGraph()
             std::cout << " --" << vertices[i].getAdj()[k].getDistance() << "--> (" << vertices[i].getAdj()[k].getDestID() << ")\n";
         }
         std::cout << "+------------------------+\n";
+    }
+}
+
+void Graph::printPath(const std::vector<int>& path)
+{
+    for(unsigned int i = 0; i < path.size(); i++)
+    {
+        if(i == path.size()-1)
+            std::cout << path[i] << "\n";
+        else std::cout << path[i] << " -> ";
     }
 }
 

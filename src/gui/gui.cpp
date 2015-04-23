@@ -36,7 +36,6 @@ void Gui::draw(const vector<Vertex> &vertices){
 		for(size_t j = 0; j < vertices[i].getAdj().size(); j++, edgeI++)
 		{
 			if(vertices[i].getAdj()[j].getDestID() < (int)i) continue;
-			Sleep(500);
 			gv->addEdge(edgeI, vertices[i].getID(), vertices[i].getAdj()[j].getDestID(), EdgeType::UNDIRECTED);
 
 			gv->setEdgeWeight(edgeI, vertices[i].getAdj()[j].getDistance());
