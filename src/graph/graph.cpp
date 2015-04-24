@@ -133,6 +133,10 @@ std::vector<int> Graph::findLongestPath(const int &srcID, const int &destID)
 
     topologicalSort(vertex);
 
+    for(unsigned int i=0; i < vertex.size();i++){
+           std::cout << vertex[i].getID() << " - ";
+    }
+
     return std::vector<int>();
 }
 
@@ -155,7 +159,7 @@ bool sortByEdge(Vertex v, Vertex v1)
     return v.getAdj().size() < v1.getAdj().size();
 }
 
-void Graph::topologicalSort(std::vector<Vertex> vertex)
+void Graph::topologicalSort(std::vector<Vertex> &vertex)
 {
     sort(vertex.begin(),vertex.end(),sortByEdge);
 }

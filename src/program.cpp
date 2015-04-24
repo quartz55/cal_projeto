@@ -15,6 +15,7 @@ bool Program::start()
     loadGraph("example", m_currentGraph);
     m_currentGraph.printGraph();
     m_currentGraph.printPath(m_currentGraph.findShortestPath(0, 5));
+    m_currentGraph.findLongestPath(0,5);
 
     return true;
 }
