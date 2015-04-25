@@ -51,14 +51,59 @@ void Graph::printGraph()
     }
 }
 
-void Graph::printPath(const std::vector<int>& path)
+void Graph::printAllPaths()
 {
-    for(unsigned int i = 0; i < path.size(); i++)
+    std::cout << "+------------------------+\n";
+    std::cout << "+        All Paths       +\n";
+    std::cout << "+------------------------+\n";
+    for(size_t i = 0; i < allPaths.size(); i++)
     {
-        if(i == path.size()-1)
-            std::cout << path[i] << "\n";
-        else std::cout << path[i] << " -> ";
+        std::cout << allPaths[i] << "\n";
     }
+    std::cout << "+------------------------+\n";
+}
+
+void Graph::findAllPathsRec(const int& currID, const int& destID, Path &path, std::vector<Path> &allPaths, int &cost)
+{
+    std::vector<Edge> adj = getVertex(currID).getAdj();
+    for(std::vector<Edge>::const_iterator adj_it = adj.begin();
+        adj_it != adj.end();
+        adj_it++)
+    {
+
+        if(!path.hasVertex((*adj_it).getDestID()))
+        {
+            cost += (*adj_it).getDistance();
+            path.addVertex(getVertex((*adj_it).getDestID()));
+            if((*adj_it).getDestID() == destID)
+            {
+                path.setCost(cost);
+                allPaths.push_back(path);
+            }
+            else findAllPathsRec((*adj_it).getDestID(), destID, path, allPaths, cost);
+
+            Vertex v2 = path.last();
+            path.pop();
+            Vertex v1 = path.last();
+
+            for(size_t i = 0; i < v1.getAdj().size(); i++)
+            {
+                if(v1.getAdj()[i].getDestID() == v2.getID())
+                {
+                    cost -= v1.getAdj()[i].getDistance();
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void Graph::findAllPaths(const int &srcID, const int &destID)
+{
+    Path path;
+    path.addVertex(getVertex(srcID));
+    int cost = 0;
+    findAllPathsRec(srcID, destID, path, allPaths, cost);
 }
 
 std::vector<int> Graph::findShortestPath(const int &srcID, const int &destID)
@@ -123,27 +168,20 @@ std::vector<int> Graph::findShortestPath(const int &srcID, const int &destID)
     return finalPath;
 }
 
-std::vector<int> Graph::findLongestPath(const int &srcID, const int &destID)
+Path& Graph::findLongestPath()
 {
-    std::vector<Vertex> vertex;
-
-    for(unsigned int i=0; i < vertices.size();i++){
-        vertex.push_back(vertices[i]);
+    int max = -1;
+    Path *p;
+    for(size_t i = 0; i < allPaths.size(); i++)
+    {
+        if(allPaths[i].getCost() > max)
+        {
+            max = allPaths[i].getCost();
+            p = &allPaths[i];
+        }
     }
 
-    topologicalSort(vertex);
-
-    for(unsigned int i=0; i < vertex.size();i++){
-           std::cout << vertex[i].getID() << " - ";
-    }
-
-    return std::vector<int>();
-}
-
-void Graph::resetVisited()
-{
-    for(size_t i = 0; i < vertices.size(); i++)
-        vertices[i].setVisited(false);
+    return *p;
 }
 
 Vertex& Graph::getVertex(int ID)
@@ -162,4 +200,10 @@ bool sortByEdge(Vertex v, Vertex v1)
 void Graph::topologicalSort(std::vector<Vertex> &vertex)
 {
     sort(vertex.begin(),vertex.end(),sortByEdge);
+}
+
+void Graph::resetVisited()
+{
+    for(size_t i = 0; i < vertices.size(); i++)
+        vertices[i].setVisited(false);
 }

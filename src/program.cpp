@@ -14,8 +14,13 @@ bool Program::start()
 
     loadGraph("example", m_currentGraph);
     m_currentGraph.printGraph();
-    m_currentGraph.printPath(m_currentGraph.findShortestPath(0, 5));
-    m_currentGraph.findLongestPath(0,5);
+
+    std::vector<int> costs;
+    m_currentGraph.findAllPaths(0, 5);
+    m_currentGraph.printAllPaths();
+
+    Path longestPath = m_currentGraph.findLongestPath();
+    std::cout << longestPath << "\n";
 
     return true;
 }
