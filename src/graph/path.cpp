@@ -42,7 +42,7 @@ std::string Path::getPathString() const
 std::ostream& operator<<(std::ostream& os, const Path& p)
 {
     if(p.getCost() < 0) os << "| No path | ";
-    else os << "| Cost " << p.getCost() << " | " << p.getPathString();
+    else os << "| Trash " << p.getCost() << " | " << p.getPathString();
     return os;
 }
 

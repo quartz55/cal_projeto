@@ -5,7 +5,7 @@
 #include <sstream>
 #include <limits.h>
 
-const int DEFAULT_CAPACITY = 20;
+// const int DEFAULT_CAPACITY = 20;
 
 Program::Program()
 {
@@ -80,8 +80,10 @@ void Program::mapMenu()
         else if(choice == options++)
         {
             input.clear();
-            m_currentGraph.printGraph();
+            Gui *gui = new Gui(600,600);
+            gui->draw(m_currentGraph);
             input.wait("* Press ENTER to continue *\n");
+            delete(gui);
         }
         else if(choice == options++)
         {
@@ -197,7 +199,7 @@ void Program::truckMenu()
         std::cout << "| Garbage left: " << m_currentGraph.garbageToCollect() << "\n";
         std::cout << "+------------+\n";
         std::cout << options++ << ". Show trucks\n";
-        std::cout << options++ << ". Truck info\n";
+        std::cout << options++ << ". Manage truck\n";
         std::cout << options++ << ". Collect all\n";
         std::cout << options++ << ". Add truck\n";
         std::cout << options++ << ". Remove truck\n";
@@ -226,7 +228,7 @@ void Program::truckMenu()
                 }
             }
             /*
-             * Truck info
+             * Truck management
              */
             if(t != NULL)
             {
@@ -236,6 +238,7 @@ void Program::truckMenu()
                     input.clear();
                     std::cout << *t << "\n";
                     std::cout << options2++ << ". Collect\n";
+                    std::cout << options2++ << ". Show path (GUI)\n";
                     std::cout << options2++ << ". Change capacity\n";
                     std::cout << options2++ << ". Return to central\n";
                     std::cout << options2++ << ". Exit\n";
@@ -257,6 +260,14 @@ void Program::truckMenu()
                             t->setPath(*best);
                             t->collect();
                         }
+                    }
+                    else if(choice2 == options2++)
+                    {
+                        if(t->getPath().getCost() < 0) continue;
+                        Gui *gui = new Gui(600,600);
+                        gui->drawPath(m_currentGraph, t->getPath());
+                        input.wait("* Press ENTER to continue *\n");
+                        delete(gui);
                     }
                     else if(choice2 == options2++)
                     {

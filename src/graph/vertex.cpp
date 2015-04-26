@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+int Edge::nextID = 0;
+
 bool Vertex::hasNeighbour(int neighbourID)
 {
     for(unsigned int i = 0; i < adjacent.size(); i++)
