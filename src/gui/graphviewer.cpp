@@ -3,7 +3,7 @@
 #include<sstream>
 
 #ifdef linux
-pid_t GraphViewer::procId = NULL;
+pid_t GraphViewer::procId = 0;
 #endif
 short GraphViewer::port = 7772;
 
@@ -33,7 +33,7 @@ void GraphViewer::initialize(int width, int height, bool dynamic, int port_n) {
         kill(getppid(), SIGINT);
         exit(0);
     }
-    else {    
+    else {
         usleep(2000000);
         con = new Connection(port_n);
 

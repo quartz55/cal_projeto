@@ -3,6 +3,9 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <limits.h>
+
+const int DEFAULT_CAPACITY = 20;
 
 Program::Program()
 {
@@ -15,14 +18,36 @@ bool Program::start()
     loadGraph("example", m_currentGraph);
     m_currentGraph.printGraph();
 
-    std::vector<int> costs;
-    m_currentGraph.findAllPaths(0, 5);
-    m_currentGraph.printAllPaths();
+    collectAll();
 
-    Path longestPath = m_currentGraph.findLongestPath();
-    std::cout << longestPath << "\n";
+    m_currentGraph.printGraph();
 
     return true;
+}
+
+void Program::collectAll()
+{
+    int trucksUsed = 0;
+    while(m_currentGraph.garbageToCollect() > 0)
+    {
+        if(trucksUsed >= (int)trucks.size())
+            trucks.push_back(Truck(DEFAULT_CAPACITY));
+
+        Truck &t = trucks[trucksUsed];
+        m_currentGraph.findAllPaths(0, 5);
+        Path* best = &m_currentGraph.findLongestPath(t.getCapacity());
+        if(best == NULL)
+        {
+            std::cerr << "No available paths for the specified capacity\n";
+            return;
+        }
+        t.setPath(*best);
+        std::cout << t.getPath() << "\n";
+
+        t.collect();
+        std::cout << m_currentGraph.garbageToCollect() << "\n";
+        ++trucksUsed;
+    }
 }
 
 bool Program::exit()

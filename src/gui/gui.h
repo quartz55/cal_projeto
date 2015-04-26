@@ -10,7 +10,6 @@ class Gui{
 
 public:
 
-	Gui(){this->gv=gv;}
 	void draw(const vector<Vertex> &vertices);
 
 };

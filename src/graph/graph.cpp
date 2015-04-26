@@ -36,15 +36,31 @@ bool Graph::addEdge(const int &srcID, const int &destID, const double &distance 
 	return true;
 }
 
+int Graph::garbageToCollect()
+{
+    int total = 0;
+    for(size_t i = 0; i < vertices.size(); i++)
+    {
+        for(size_t j = 0; j < vertices[i].getAdj().size(); j++)
+        {
+            if(vertices[i].getAdj()[j].getDestID() < i) continue;
+            total += vertices[i].getAdj()[j].getDistance();
+        }
+    }
+    return total;
+}
+
 void Graph::printGraph()
 {
+    std::cout << "+------------------------+\n";
+    std::cout << "| Total garbage: " << garbageToCollect() << "\n";
     std::cout << "+------------------------+\n";
     for(size_t i = 0; i < vertices.size(); i++)
     {
         for(size_t k = 0; k < vertices[i].getAdj().size(); k++)
         {
             if(vertices[i].getAdj()[k].getDestID() <= (int)i) continue;
-            std::cout << "(" << i << ")";
+            std::cout << "| (" << i << ")";
             std::cout << " --" << vertices[i].getAdj()[k].getDistance() << "--> (" << vertices[i].getAdj()[k].getDestID() << ")\n";
         }
         std::cout << "+------------------------+\n";
@@ -103,7 +119,8 @@ void Graph::findAllPaths(const int &srcID, const int &destID)
     Path path;
     path.addVertex(getVertex(srcID));
     int cost = 0;
-    findAllPathsRec(srcID, destID, path, allPaths, cost);
+    this->allPaths.clear();
+    findAllPathsRec(srcID, destID, path, this->allPaths, cost);
 }
 
 std::vector<int> Graph::findShortestPath(const int &srcID, const int &destID)
@@ -168,13 +185,13 @@ std::vector<int> Graph::findShortestPath(const int &srcID, const int &destID)
     return finalPath;
 }
 
-Path& Graph::findLongestPath()
+Path& Graph::findLongestPath(const int& maxCapacity)
 {
     int max = -1;
-    Path *p;
+    Path *p = NULL;
     for(size_t i = 0; i < allPaths.size(); i++)
     {
-        if(allPaths[i].getCost() > max)
+        if(allPaths[i].getCost() > max && allPaths[i].getCost() <= maxCapacity)
         {
             max = allPaths[i].getCost();
             p = &allPaths[i];

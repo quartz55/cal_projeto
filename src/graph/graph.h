@@ -23,6 +23,11 @@ public:
     int addVertex(int ID);
     bool addEdge(const int &srcID, const int &destID, const double &distance);
 
+    int garbageToCollect();
+
+    /*
+     * Visualisations
+     */
     void printGraph();
     void printAllPaths();
 
@@ -30,7 +35,7 @@ public:
      * Algorithms
      */
     vector<int> findShortestPath(const int &srcID, const int &destID);
-    Path& findLongestPath();
+    Path& findLongestPath(const int& maxCapacity);
     void findAllPathsRec(const int& currID, const int& destID, Path &path, vector<Path> &allPaths, int &cost);
     void findAllPaths(const int &srcID, const int &destID);
     void topologicalSort(vector<Vertex> &vertex);

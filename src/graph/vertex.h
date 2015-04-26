@@ -15,12 +15,9 @@ private:
 public:
 
     Vertex(int ID):ID(ID), visited(false), tentative(0){}
-    bool hasNeighbour(int neighbourID){
-        for(unsigned int i = 0; i < adjacent.size(); i++)
-            if(adjacent[i].getDestID() == neighbourID) return true;
-        return false;
-    }
+    bool hasNeighbour(int neighbourID);
     void addEdge(Edge adj){ adjacent.push_back(adj);}
+    Edge& getEdge(int destID);
 
     std::vector<Edge> getAdj() const {return adjacent;}
     bool wasVisited() const {return visited;}
