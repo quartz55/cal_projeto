@@ -13,6 +13,7 @@ using std::vector;
 
 class Graph{
 private:
+    int start, end;
     vector<Vertex> vertices;
     vector<Path> allPaths;
 
@@ -22,6 +23,11 @@ public:
     int addVertex();
     int addVertex(int ID);
     bool addEdge(const int &srcID, const int &destID, const double &distance);
+    bool addEdgeBi(const int &srcID, const int &destID, const double &distance);
+
+    void removeVertex(const int& ID);
+    void removeEdge(const int& srcID, const int& destID);
+    void changeEdge(const int& srcID, const int& destID, const int& distance);
 
     int garbageToCollect();
 
@@ -45,6 +51,10 @@ public:
      */
     vector<Vertex>& getVertices(){return vertices;}
     Vertex& getVertex(int ID);
+    int getStart(){ return start;}
+    void setStart(const int& ID){ this->start = ID;}
+    int getEnd(){ return end;}
+    void setEnd(const int& ID){ this->end = ID;}
 };
 
 #endif

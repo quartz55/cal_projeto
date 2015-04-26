@@ -30,6 +30,7 @@ public:
     int calcCost();
     friend std::ostream& operator<<(std::ostream& os, const Path& p);
     bool operator< (const Path &p2);
+    bool operator> (const Path &p2);
     bool operator== (const Path &p2);
 
     /*

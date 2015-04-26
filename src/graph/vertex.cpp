@@ -16,5 +16,5 @@ Edge& Vertex::getEdge(int destID)
         if(adjacent[i].getDestID() == destID) return adjacent[i];
     }
 
-    return *(new Edge(-1, -1));
+    return *(new Edge(-1, -1, false));
 }

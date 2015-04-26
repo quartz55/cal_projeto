@@ -2,6 +2,7 @@
 #include <limits.h>
 #include <algorithm>
 #include <iostream>
+#include <functional>
 
 int Graph::addVertex()
 {
@@ -31,9 +32,75 @@ int Graph::addVertex(int ID)
 bool Graph::addEdge(const int &srcID, const int &destID, const double &distance )
 {
 	if(vertices[srcID].hasNeighbour(destID)) return false;
-	vertices[srcID].addEdge(Edge(destID, distance));
-	vertices[destID].addEdge(Edge(srcID, distance));
+	vertices[srcID].addEdge(Edge(destID, distance, false));
 	return true;
+}
+
+bool Graph::addEdgeBi(const int &srcID, const int &destID, const double &distance )
+{
+	if(vertices[srcID].hasNeighbour(destID)) return false;
+	vertices[srcID].addEdge(Edge(destID, distance, true));
+	vertices[destID].addEdge(Edge(srcID, distance, true));
+	return true;
+}
+
+void Graph::removeVertex( const int &ID )
+{
+    for(size_t i = 0; i < vertices.size(); i++)
+    {
+        if(vertices[i].getID() == ID)
+        {
+            vertices.erase(vertices.begin()+i);
+            --i;
+        }
+
+        for(size_t j = 0; j < vertices[i].getAdj().size(); j++)
+        {
+            if(vertices[i].getAdj()[j].getDestID() == ID)
+            {
+                vertices[i].getAdj().erase(vertices[i].getAdj().begin()+j);
+                --j;
+            }
+        }
+    }
+}
+
+void Graph::removeEdge( const int &srcID, const int &destID )
+{
+    for(size_t i = 0; i < vertices.size(); i++)
+    {
+        if(vertices[i].getID() == srcID)
+        {
+            for(size_t j = 0; j < vertices[i].getAdj().size(); j++)
+            {
+                if(vertices[i].getAdj()[j].getDestID() == destID)
+                {
+                    vertices[i].getAdj().erase(vertices[i].getAdj().begin()+j);
+                    break;
+                }
+            }
+            break;
+        }
+    }
+}
+
+void Graph::changeEdge( const int &srcID, const int &destID, const int& distance)
+{
+    for(size_t i = 0; i < vertices.size(); i++)
+    {
+        if(vertices[i].getID() == srcID)
+        {
+            for(size_t j = 0; j < vertices[i].getAdj().size(); j++)
+            {
+                if(vertices[i].getAdj()[j].getDestID() == destID)
+                {
+                    vertices[i].getAdj()[j].setDistance(distance);
+                    break;
+                }
+            }
+            break;
+        }
+    }
 }
 
 int Graph::garbageToCollect()
@@ -43,7 +110,7 @@ int Graph::garbageToCollect()
     {
         for(size_t j = 0; j < vertices[i].getAdj().size(); j++)
         {
-            if(vertices[i].getAdj()[j].getDestID() < i) continue;
+            if(vertices[i].getAdj()[j].getDestID() < (int)i) continue;
             total += vertices[i].getAdj()[j].getDistance();
         }
     }
@@ -53,22 +120,32 @@ int Graph::garbageToCollect()
 void Graph::printGraph()
 {
     std::cout << "+------------------------+\n";
+    std::cout << "| Start: " << start << " | End: " << end << "\n";
+    std::cout << "+------------------------+\n";
     std::cout << "| Total garbage: " << garbageToCollect() << "\n";
     std::cout << "+------------------------+\n";
     for(size_t i = 0; i < vertices.size(); i++)
     {
+
+        bool printed = false;
+
         for(size_t k = 0; k < vertices[i].getAdj().size(); k++)
         {
-            if(vertices[i].getAdj()[k].getDestID() <= (int)i) continue;
-            std::cout << "| (" << i << ")";
+            // if(vertices[i].getAdj()[k].getDestID() <= (int)i && vertices[i].getAdj()[k].getBidirectional()) continue;
+            printed = true;
+            std::cout << "| (" << vertices[i].getID() << ")";
             std::cout << " --" << vertices[i].getAdj()[k].getDistance() << "--> (" << vertices[i].getAdj()[k].getDestID() << ")\n";
         }
+        if(!printed)
+            std::cout << "| (" << vertices[i].getID() << ")\n";
         std::cout << "+------------------------+\n";
     }
 }
 
 void Graph::printAllPaths()
 {
+    /* Descending order of garbage */
+    std::sort(allPaths.begin(), allPaths.end(), std::greater<Path&>());
     std::cout << "+------------------------+\n";
     std::cout << "+        All Paths       +\n";
     std::cout << "+------------------------+\n";
@@ -127,7 +204,7 @@ std::vector<int> Graph::findShortestPath(const int &srcID, const int &destID)
 {
     resetVisited();
 
-    std::vector<double> tentative(vertices.size(), INT_MAX);
+    std::vector<int> tentative(vertices.size(), INT_MAX);
     std::vector<int> previous(vertices.size());
     tentative[srcID] = 0;
 

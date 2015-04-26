@@ -41,9 +41,12 @@ std::string Path::getPathString() const
 
 std::ostream& operator<<(std::ostream& os, const Path& p)
 {
-    os << "Cost: " << p.getCost() << " | " << p.getPathString();
+    if(p.getCost() < 0) os << "| No path | ";
+    else os << "| Cost " << p.getCost() << " | " << p.getPathString();
     return os;
 }
+
+bool Path::operator> (const Path &p2) {return this->m_cost > p2.getCost();}
 
 bool Path::operator< (const Path &p2) {return this->m_cost < p2.getCost();
 }

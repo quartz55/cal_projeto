@@ -19,7 +19,7 @@ public:
     void addEdge(Edge adj){ adjacent.push_back(adj);}
     Edge& getEdge(int destID);
 
-    std::vector<Edge> getAdj() const {return adjacent;}
+    std::vector<Edge>& getAdj() {return adjacent;}
     bool wasVisited() const {return visited;}
     bool setVisited(bool newVisited){return visited=newVisited;}
     int getID() const {return ID;}
