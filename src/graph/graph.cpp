@@ -145,7 +145,7 @@ void Graph::printGraph()
 void Graph::printAllPaths()
 {
     /* Descending order of garbage */
-    std::sort(allPaths.begin(), allPaths.end(), std::greater<Path&>());
+    std::sort(allPaths.begin(), allPaths.end(), std::greater<Path>());
     std::cout << "+------------------------+\n";
     std::cout << "+        All Paths       +\n";
     std::cout << "+------------------------+\n";

@@ -46,12 +46,12 @@ std::ostream& operator<<(std::ostream& os, const Path& p)
     return os;
 }
 
-bool Path::operator> (const Path &p2) {return this->m_cost > p2.getCost();}
+bool Path::operator> (const Path &p2) const {return this->m_cost > p2.getCost();}
 
-bool Path::operator< (const Path &p2) {return this->m_cost < p2.getCost();
+bool Path::operator< (const Path &p2) const {return this->m_cost < p2.getCost();
 }
 
-bool Path::operator== (const Path &p2) {return this->m_cost == p2.getCost();}
+bool Path::operator== (const Path &p2) const {return this->m_cost == p2.getCost();}
 
 /*
  * +---------+

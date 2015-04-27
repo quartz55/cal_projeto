@@ -8,7 +8,7 @@
 
 #include <vector>
 
-const std::string GRAPHS_SAVE_PATH = "./graphs/";
+const std::string GRAPHS_SAVE_PATH = "./src/graphs/";
 const std::string GRAPHS_EXTENSION =".graph";
 
 class Program
