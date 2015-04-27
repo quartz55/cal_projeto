@@ -4,6 +4,8 @@
 #include <fstream>
 #include <sstream>
 #include <limits.h>
+#include <algorithm>
+#include <functional>
 
 // const int DEFAULT_CAPACITY = 20;
 
@@ -298,6 +300,7 @@ void Program::truckMenu()
             int capacity = input.getUnsignedInt("Truck capacity? ");
             trucks.push_back(capacity);
             std::cout << trucks.back() << "\n";
+            std::sort(trucks.begin(), trucks.end(), std::greater<Truck>());
             input.wait("* Press ENTER to continue *\n");
         }
         else if(choice == options++)

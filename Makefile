@@ -15,7 +15,7 @@ LDFLAGS   =
 
 # The directories in which source files reside.
 # If not specified, only the current directory will be searched.
-SRCDIRS   = ./ ./graph ./gui
+SRCDIRS   = ./src ./src/graph ./src/gui
 
 # The executable file name.
 # If not specified, current directory name or `a.out' will be used.

@@ -145,7 +145,6 @@ void Graph::printGraph()
 void Graph::printAllPaths()
 {
     /* Descending order of garbage */
-    std::sort(allPaths.begin(), allPaths.end(), std::greater<Path>());
     std::cout << "+------------------------+\n";
     std::cout << "+        All Paths       +\n";
     std::cout << "+------------------------+\n";
@@ -198,6 +197,7 @@ void Graph::findAllPaths(const int &srcID, const int &destID)
     int cost = 0;
     this->allPaths.clear();
     findAllPathsRec(srcID, destID, path, this->allPaths, cost);
+    std::sort(allPaths.begin(), allPaths.end(), std::greater<Path>());
 }
 
 std::vector<int> Graph::findShortestPath(const int &srcID, const int &destID)

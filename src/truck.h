@@ -23,6 +23,7 @@ public:
     void reset();
 
     friend std::ostream& operator<< (std::ostream& os, const Truck& t);
+    bool operator> (const Truck &t2) const;
 
     /*
      * Gets and Sets

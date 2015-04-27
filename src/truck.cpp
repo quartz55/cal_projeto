@@ -17,3 +17,8 @@ void Truck::reset()
     path = Path();
     this->collected = false;
 }
+
+bool Truck::operator> (const Truck &t2) const
+{
+    return this->capacity > t2.getCapacity();
+}
