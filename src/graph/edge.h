@@ -13,7 +13,7 @@ private:
 public:
 
 
-    Edge(int destID, double distance, bool bidirectional):destID(destID), distance(distance), bidirectional(bidirectional)
+    Edge(int destID, int distance, bool bidirectional):destID(destID), distance(distance), bidirectional(bidirectional)
         {
             ID = nextID++;
         }

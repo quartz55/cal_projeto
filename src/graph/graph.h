@@ -29,7 +29,7 @@ public:
     void removeEdge(const int& srcID, const int& destID);
     void changeEdge(const int& srcID, const int& destID, const int& distance);
 
-    int garbageToCollect();
+    int trashToCollect();
 
     /*
      * Visualisations
@@ -52,9 +52,27 @@ public:
     vector<Vertex>& getVertices(){return vertices;}
     Vertex& getVertex(int ID);
     int getStart(){ return start;}
-    void setStart(const int& ID){ this->start = ID;}
+    void setStart(const int& ID)
+        {
+            Vertex *v = &getVertex(ID);
+            if(v->getID() == -1)
+            {
+                delete(v);
+                return;
+            }
+            this->start = ID;
+        }
     int getEnd(){ return end;}
-    void setEnd(const int& ID){ this->end = ID;}
+    void setEnd(const int& ID)
+        {
+        Vertex *v = &getVertex(ID);
+        if(v->getID() == -1)
+        {
+            delete(v);
+            return;
+        }
+        this->end = ID;
+    }
 };
 
 #endif

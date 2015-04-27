@@ -75,6 +75,9 @@ void Graph::removeEdge( const int &srcID, const int &destID )
             {
                 if(vertices[i].getAdj()[j].getDestID() == destID)
                 {
+                    if(vertices[i].getAdj()[j].getBidirectional())
+                        getVertex(destID).getEdge(srcID).setBidirectional(false);
+
                     vertices[i].getAdj().erase(vertices[i].getAdj().begin()+j);
                     break;
                 }
@@ -94,6 +97,9 @@ void Graph::changeEdge( const int &srcID, const int &destID, const int& distance
             {
                 if(vertices[i].getAdj()[j].getDestID() == destID)
                 {
+                    if(vertices[i].getAdj()[j].getBidirectional())
+                        getVertex(destID).getEdge(srcID).setDistance(distance);
+
                     vertices[i].getAdj()[j].setDistance(distance);
                     break;
                 }
@@ -103,7 +109,7 @@ void Graph::changeEdge( const int &srcID, const int &destID, const int& distance
     }
 }
 
-int Graph::garbageToCollect()
+int Graph::trashToCollect()
 {
     int total = 0;
     for(size_t i = 0; i < vertices.size(); i++)
@@ -122,7 +128,7 @@ void Graph::printGraph()
     std::cout << "+------------------------+\n";
     std::cout << "| Start: " << start << " | End: " << end << "\n";
     std::cout << "+------------------------+\n";
-    std::cout << "| Total garbage: " << garbageToCollect() << "\n";
+    std::cout << "| Total trash: " << trashToCollect() << "\n";
     std::cout << "+------------------------+\n";
     for(size_t i = 0; i < vertices.size(); i++)
     {
@@ -144,9 +150,9 @@ void Graph::printGraph()
 
 void Graph::printAllPaths()
 {
-    /* Descending order of garbage */
+    /* Descending order of trash */
     std::cout << "+------------------------+\n";
-    std::cout << "+        All Paths       +\n";
+    std::cout << "|        All Paths       |\n";
     std::cout << "+------------------------+\n";
     for(size_t i = 0; i < allPaths.size(); i++)
     {

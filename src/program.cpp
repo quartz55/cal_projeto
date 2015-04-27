@@ -7,8 +7,6 @@
 #include <algorithm>
 #include <functional>
 
-// const int DEFAULT_CAPACITY = 20;
-
 Program::Program()
 {
     start();
@@ -29,7 +27,6 @@ void Program::mainMenu()
     {
         int options = 1;
         input.clear();
-        std::cout << "Lixo e Caixotes LDA\n\n";
         std::cout << "+-----------+\n";
         std::cout << "| Main Menu |\n";
         std::cout << "+-----------+\n";
@@ -61,7 +58,6 @@ void Program::mapMenu()
     {
         int options = 1;
         input.clear();
-        std::cout << "Lixo e Caixotes LDA\n\n";
         std::cout << "+----------+\n";
         std::cout << "| Map Menu |\n";
         std::cout << "+----------+\n";
@@ -111,7 +107,6 @@ void Program::modifyMapMenu()
     {
         int options = 1;
         input.clear();
-        std::cout << "Lixo e Caixotes LDA\n\n";
         std::cout << "+-----------------+\n";
         std::cout << "| Modify Map Menu |\n";
         std::cout << "+-----------------+\n";
@@ -136,13 +131,13 @@ void Program::modifyMapMenu()
         else if(choice == options++)
         {
             int src,dest;
-            double garbage;
+            double trash;
             src = input.getUnsignedInt("Start vertex? ");
             dest = input.getUnsignedInt("End vertex? ");
-            garbage = (double)input.getUnsignedInt("Garbage quantity? ");
+            trash = (double)input.getUnsignedInt("Trash quantity? ");
             char bi = input.getChar("Bidirectional (Y/n)? ");
-            if(bi == 'n') m_currentGraph.addEdge(src,dest,garbage);
-            else m_currentGraph.addEdgeBi(src,dest,garbage);
+            if(bi == 'n') m_currentGraph.addEdge(src,dest,trash);
+            else m_currentGraph.addEdgeBi(src,dest,trash);
         }
         else if(choice == options++)
         {
@@ -194,11 +189,10 @@ void Program::truckMenu()
     {
         int options = 1;
         input.clear();
-        std::cout << "Lixo e Caixotes LDA\n\n";
         std::cout << "+------------+\n";
         std::cout << "| Truck Menu |\n";
         std::cout << "+------------+\n";
-        std::cout << "| Garbage left: " << m_currentGraph.garbageToCollect() << "\n";
+        std::cout << "| Trash left: " << m_currentGraph.trashToCollect() << "\n";
         std::cout << "+------------+\n";
         std::cout << options++ << ". Show trucks\n";
         std::cout << options++ << ". Manage truck\n";
@@ -292,7 +286,6 @@ void Program::truckMenu()
         {
             input.clear();
             collectAll();
-            input.wait("* Press ENTER to continue *\n");
         }
         else if(choice == options++)
         {
@@ -328,7 +321,7 @@ void Program::truckMenu()
 void Program::collectAll()
 {
     int trucksUsed = 0;
-    while(m_currentGraph.garbageToCollect() > 0)
+    while(m_currentGraph.trashToCollect() > 0)
     {
         if(trucksUsed >= (int)trucks.size())
             break;
